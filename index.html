@@ -29,9 +29,11 @@
       */
 
           var myChart = new dimple.chart(svg, data);
-          var x = myChart.addMeasureAxis("x", "avg"); 
+          var x = myChart.addCategoryAxis("x", "handedness"); 
           myChart.addMeasureAxis("y", "HR");
-          myChart.addSeries(["name","handedness"], dimple.plot.scatter);
+          /* myChart.addSeries(null, dimple.plot.bar); */
+          var mySeries = myChart.addSeries( ["handedness"], dimple.plot.bar);
+          mySeries.aggregate = dimple.aggregateMethod.avg;
           myChart.draw();
         };
       </script>
