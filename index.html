@@ -7,13 +7,13 @@
     <script type="text/javascript">
       function draw(data) {
 
-
+      
           "use strict";
           var margin = 75,
               width = 1500 - margin,
               height = 700 - margin;
 
-
+      /* Using d3.js to create an SVG element*/
           var svg = d3.select("body")
             .append("svg")
               .attr("width", width + margin)
@@ -21,14 +21,14 @@
             .append('g')
                 .attr('class','chart');
 
-
+     /*  Dimple.js code used to create the chart*/
           var myChart = new dimple.chart(svg, data);
           var x = myChart.addCategoryAxis("x", "handedness");
-          x.title = "Handedness";
+          x.title = "Handedness"; 
           var y = myChart.addMeasureAxis("y", "HR");
           y.title = "Home runs";
           var mySeries = myChart.addSeries( ["handedness"], dimple.plot.bar);
-          mySeries.aggregate = dimple.aggregateMethod.avg;
+          mySeries.aggregate = dimple.aggregateMethod.avg; /* Changing aggregation method so that it uses average instead of sum */
           myChart.draw();
         };
       </script>
@@ -37,10 +37,11 @@
   <script type="text/javascript">
 
   d3.csv("data/baseball_data.csv", draw);
+    /* Adding a title to the graph */
   d3.select("body")
     .append("h2")
-    .style("text-align", "Center")
-    .text("Average Homerun by handedness")
+      .style("text-align", "Center")
+      .text("Average Homerun by handedness")
 
   </script>
 </body>
