@@ -6,15 +6,12 @@
   <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
     <script type="text/javascript">
       function draw(data) {
-      
-      /*
-        D3.js setup code
-      */
+
 
           "use strict";
           var margin = 75,
-              width = 1400 - margin,
-              height = 600 - margin;
+              width = 1500 - margin,
+              height = 700 - margin;
 
 
           var svg = d3.select("body")
@@ -24,14 +21,12 @@
             .append('g')
                 .attr('class','chart');
 
-      /*
-        Dimple.js Chart construction code
-      */
 
           var myChart = new dimple.chart(svg, data);
-          var x = myChart.addCategoryAxis("x", "handedness"); 
-          myChart.addMeasureAxis("y", "HR");
-          /* myChart.addSeries(null, dimple.plot.bar); */
+          var x = myChart.addCategoryAxis("x", "handedness");
+          x.title = "Handedness";
+          var y = myChart.addMeasureAxis("y", "HR");
+          y.title = "Home runs";
           var mySeries = myChart.addSeries( ["handedness"], dimple.plot.bar);
           mySeries.aggregate = dimple.aggregateMethod.avg;
           myChart.draw();
@@ -40,11 +35,13 @@
   </head>
 <body>
   <script type="text/javascript">
-  /*
-    Use D3 (not dimple.js) to load the TSV file
-    and pass the contents of it to the draw function
-    */
+
   d3.csv("data/baseball_data.csv", draw);
+  d3.select("body")
+    .append("h2")
+    .style("text-align", "Center")
+    .text("Average Homerun by handedness")
+
   </script>
 </body>
 </html>
