@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+    <script type="text/javascript">
+      function draw(data) {
+
+      
+          "use strict";
+          var margin = 75,
+              width = 1500 - margin,
+              height = 700 - margin;
+
+      /* Using d3.js to create an SVG element*/
+          var svg = d3.select("body")
+            .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin)
+            .append('g')
+                .attr('class','chart');
+
+     /*  Dimple.js code used to create the chart*/
+
+     
+
+
+          var myChart = new dimple.chart(svg, data);
+
+          myChart.defaultColors = [
+          new dimple.color("#B3E5FC", "#B3E5FC", 1), // blue
+          new dimple.color("#d35400", "#d35400", 1), // red
+          new dimple.color("#BBDEFB", "#BBDEFB", 1)  // gray
+      ];
+          var x = myChart.addCategoryAxis("x", "handedness");
+          x.title = "Handedness"; 
+          var y = myChart.addMeasureAxis("y", "HR");
+          y.title = "Home runs";
+          var mySeries = myChart.addSeries( ["handedness"], dimple.plot.bar);
+          mySeries.aggregate = dimple.aggregateMethod.avg; /* Changing aggregation method so that it uses average instead of sum */
+
+          
+          mySeries.getTooltipText = function (e) {
+            if (e.x === "R") {
+                return ["Right handed",
+                        "Average Home runs: " + e.y.toFixed(0)];
+              } else if (e.x === "L") {
+                return ["Left handed",
+                        "Average Home runs: " + e.y.toFixed(0)];
+              } else if (e.x === "B") {
+                return ["Both Handed",
+                        "Average Home runs: " + e.y.toFixed(0)];
+              }
+          };
+
+          myChart.draw();
+
+          /* Changing x labels names*/
+
+          x.shapes
+           .selectAll("text")
+           .text(function (d) {
+             var i;
+             for (i = 0; i < data.length; i++) {
+              if (d === "R") {
+                return "Right handed";
+              } else if (d === "L") {
+                return "Left handed";
+              } else if (d === "B") {
+                return "Both Handed";
+              }
+             }
+           });
+
+           
+
+        };
+      </script>
+  </head>
+<body>
+  <script type="text/javascript">
+
+  d3.csv("data/baseball_data.csv", draw);
+    /* Adding a title to the graph */
+  d3.select("body")
+    .append("h2")
+      .style("text-align", "Center")
+      .text("Average Home runs by player handedness")
+  </script>
+</body>
+</html>
