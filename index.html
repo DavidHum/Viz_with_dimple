@@ -40,6 +40,7 @@
           var mySeries = myChart.addSeries( ["handedness"], dimple.plot.bar);
           mySeries.aggregate = dimple.aggregateMethod.avg; /* Changing aggregation method so that it uses average instead of sum */
 
+          /* Changing tooltip text so that it matches labels */
           
           mySeries.getTooltipText = function (e) {
             if (e.x === "R") {
@@ -72,8 +73,7 @@
               }
              }
            });
-
-           
+       
 
         };
       </script>
@@ -82,11 +82,18 @@
   <script type="text/javascript">
 
   d3.csv("data/baseball_data.csv", draw);
-    /* Adding a title to the graph */
+
+    /* Adding a title and summary to the graph */
+
   d3.select("body")
     .append("h2")
       .style("text-align", "Center")
-      .text("Average Home runs by player handedness")
+      .text("Comparing average home run hit by player handedness");
+
+  d3.select("body")
+     .append("p")
+      .style("text-align", "left")
+      .text("Here we have a bar chart of the handedness (right handed, left handed, or both handed) of 1,157 baseball players. In this chart we are comparing the average of all the home runs that those player have hit and we are grouping them by their handedness. Here we see that left handed player have more home runs on average than right handed or both handed players");
   </script>
 </body>
 </html>
