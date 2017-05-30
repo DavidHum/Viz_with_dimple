@@ -4,13 +4,23 @@
   <meta charset="utf-8">
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+<style type="text/css">
+
+    body {
+    max-width: 1000px;
+    margin: auto;
+}
+
+</style>
+
+
     <script type="text/javascript">
       function draw(data) {
 
       
           "use strict";
           var margin = 75,
-              width = 1500 - margin,
+              width = 1000 - margin,
               height = 700 - margin;
 
       /* Using d3.js to create an SVG element*/
@@ -34,10 +44,11 @@
           new dimple.color("#BBDEFB", "#BBDEFB", 1)  // gray
       ];
           var x = myChart.addCategoryAxis("x", "handedness");
+          x.addOrderRule(["L","B","R"]); // order of bars left to the left, right to the right and both in the middle.
           x.title = "Handedness"; 
           var y = myChart.addMeasureAxis("y", "HR");
           y.title = "Home runs";
-          var mySeries = myChart.addSeries( ["handedness"], dimple.plot.bar);
+          var mySeries = myChart.addSeries( ["Order","handedness"], dimple.plot.bar);
           mySeries.aggregate = dimple.aggregateMethod.avg; /* Changing aggregation method so that it uses average instead of sum */
 
           /* Changing tooltip text so that it matches labels */
